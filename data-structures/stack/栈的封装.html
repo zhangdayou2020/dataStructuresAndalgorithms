@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>栈的封装</title>
+  </head>
+  <body>
+    <script>
+      // Method ： 和某个对象实例有联系的
+      // function ：
+      // 封装栈类
+      function Stack() {
+        // 栈中的属性
+        this.items = [];
+        // 栈的相关操作
+        //  push(element) 添加一个元素到栈顶
+        Stack.prototype.push = function (element) {
+          this.items.push(element);
+        };
+
+        //  pop()  移除栈顶的元素,同时返回被移除的元素
+
+        Stack.prototype.pop = function () {
+          return this.items.pop();
+        };
+        //  peek() 返回栈顶的元素,不对栈进行任何操作(仅仅是返回它)
+
+        Stack.prototype.peek = function () {
+          return this.items[this.items.length - 1];
+        };
+        //  isEmpty() 如果栈里面没有任何元素就返回true 否则false
+
+        Stack.prototype.isEmpty = function () {
+          return this.items.length == 0;
+        };
+        //  size() 返回栈里面元素的个数
+        Stack.prototype.size = function () {
+          return this.items.length;
+        };
+        //  toString() 将栈结构的内容以字符串形式返回
+        Stack.prototype.toString = function () {
+          let resultString = "";
+          for (let i = 0; i < this.items.length; i++) {
+            resultString += this.items[i] + "";
+          }
+          return resultString;
+        };
+      }
+      // 栈的使用
+      var stack = new Stack();
+      console.log(stack.isEmpty(), "isEmpty 1");
+      stack.push("张大佑");
+      console.log(stack.isEmpty(), "isEmpty 2");
+      stack.push("Vue.js");
+      stack.push("React.js");
+      stack.push(2);
+      stack.push(3);
+      stack.push({
+        name: "王祖贤",
+        age: 19,
+      });
+      stack.push({
+        name: "林志玲",
+        age: 21,
+      });
+      const testPop = stack.pop();
+      const testpeek = stack.peek();
+      console.log(testPop, "testPop");
+      console.log(testpeek, "testpeek");
+      console.log(stack);
+      console.log(stack.size(), "size");
+      console.log(stack.toString(), "toString"); // 对象没有实现 toString
+
+      // 将十进制转换成二进制
+      function decTwoBin(decNumber) {
+        console.log(decNumber, "decNumber--");
+        // 定义栈对象
+        let stackNumber = new Stack();
+        // 循环操作
+        // 使用while 不确定次数
+        while (decNumber > 0) {
+          // 获取余数 并且放入栈中
+          stackNumber.push(decNumber % 2);
+          // 获取的整除后的结果 作为下一次的运算的数字
+          decNumber = Math.floor(decNumber / 2);
+        }
+
+        // 从栈中取出01
+        let binaryString = "";
+        while (!stackNumber.isEmpty()) {
+          binaryString += stackNumber.pop();
+        }
+        return binaryString;
+      }
+      const result = decTwoBin(1000);
+      console.log(result, "二进制");
+    </script>
+  </body>
+</html>
