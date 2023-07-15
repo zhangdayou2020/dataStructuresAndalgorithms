@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>队列的封装</title>
+  </head>
+  <body>
+    <script>
+      // 封装队列的类
+      function Queue() {
+        // 属性
+        this.items = [];
+        // 方法 enqueue(element): 向队列尾部添加一个或者多个新的项
+        Queue.prototype.enqueue = function (element) {
+          this.items.push(element);
+        };
+
+        // dequeue(): 移除队列的第一个项(即排在队列最前面的), 并返回被移除的元素
+
+        Queue.prototype.dequeue = function () {
+          return this.items.shift();
+        };
+        // front(): 返回队列中的第一个元素 最先被添加也是最先被移除的元素,队列不做任何操作(只返回元素信息)
+        Queue.prototype.front = function () {
+          return this.items[0];
+        };
+        // isEmpty():如果队列中不包含任何元素 返回true 否则返回false
+        Queue.prototype.isEmpty = function () {
+          return this.items.length == 0;
+        };
+        // size(): 返回队列中包含的元素个数
+        Queue.prototype.size = function () {
+          return this.items.length;
+        };
+        // toString(): 将队列中的内容 转为字符串
+        Queue.prototype.toString = function () {
+          let resultString = "";
+          for (let i = 0; i < this.items.length; i++) {
+            resultString += this.items[i] + "";
+          }
+          return resultString;
+        };
+      }
+      // 使用队列
+      let queue = new Queue();
+      console.log(queue.isEmpty(), "isEmpty 1");
+      queue.enqueue("张大佑");
+      console.log(queue.isEmpty(), "isEmpty 2");
+      queue.enqueue("Vue.js");
+      queue.enqueue("React.js");
+      queue.enqueue(2);
+      queue.enqueue(3);
+      const testDequeue = queue.dequeue();
+      console.log(testDequeue, "testDequeue--");
+      const testFront = queue.front();
+      console.log(testFront, "testFront--");
+      console.log(queue, "queue");
+      console.log(queue.size(), "size");
+      console.log(queue.toString(), "toString"); // 对象没有实现 toString
+    </script>
+  </body>
+</html>
