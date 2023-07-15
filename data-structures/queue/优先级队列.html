@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>优先级队列</title>
+  </head>
+  <body>
+    <script>
+      // 封装优先级队列
+      function PriorityQueue() {
+        // 再封装一个类
+        function QueueElement(element, priority) {
+          this.element = element;
+          this.priority = priority;
+        }
+        // 封装属性
+        this.items = [];
+        // 实现插入方法
+        PriorityQueue.prototype.enqueue = function (element, priority) {
+          // 创建 QueueElement对象
+          let queueElement = new QueueElement(element, priority);
+          // 判断队列是否为空
+          if (this.items.length === 0) {
+            this.items.push(queueElement);
+          } else {
+            let added = false;
+            for (let i = 0; i < this.items.length; i++) {
+              if (queueElement.priority < this.items[i].priority) {
+                this.items.splice(i, 0, queueElement);
+                added = true;
+                break;
+              }
+            }
+            if (!added) {
+              this.items.push(queueElement);
+            }
+          }
+        };
+      }
+      let priorityQueue = new PriorityQueue();
+      priorityQueue.enqueue("HTML", 100);
+      priorityQueue.enqueue("CSS", 90);
+      priorityQueue.enqueue("JavaScript", 1);
+      priorityQueue.enqueue("Vue.js", 10);
+      console.log(priorityQueue, "priorityQueue");
+    </script>
+  </body>
+</html>
