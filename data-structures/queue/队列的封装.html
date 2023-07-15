@@ -44,20 +44,44 @@
       }
       // 使用队列
       let queue = new Queue();
-      console.log(queue.isEmpty(), "isEmpty 1");
       queue.enqueue("张大佑");
-      console.log(queue.isEmpty(), "isEmpty 2");
       queue.enqueue("Vue.js");
       queue.enqueue("React.js");
       queue.enqueue(2);
       queue.enqueue(3);
       const testDequeue = queue.dequeue();
-      console.log(testDequeue, "testDequeue--");
       const testFront = queue.front();
-      console.log(testFront, "testFront--");
-      console.log(queue, "queue");
-      console.log(queue.size(), "size");
-      console.log(queue.toString(), "toString"); // 对象没有实现 toString
+
+      // 击鼓传花
+      function passGame(nameList, number) {
+        // 1 创建一个队列结构
+        let nameQueue = new Queue();
+        // 2 将所有人加到队列中
+        for (let i = 0; i < nameList.length; i++) {
+          nameQueue.enqueue(nameList[i]);
+        }
+        // 3 开始数数字, 不是num的 重新加入到队列的末尾
+        // 如果是num这个数字的话 将其从队列中删除
+
+        while (nameQueue.size() > 1) {
+          for (let j = 0; j < number - 1; j++) {
+            nameQueue.enqueue(nameQueue.dequeue());
+          }
+          nameQueue.dequeue();
+        }
+        // 4 获取剩下的那个人
+        return nameQueue.front();
+      }
+      const NameList = [
+        "Vue.js",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "TypeScript",
+        "React.js",
+      ];
+      const result = passGame(NameList, 3);
+      console.log(result, "result");
     </script>
   </body>
 </html>
