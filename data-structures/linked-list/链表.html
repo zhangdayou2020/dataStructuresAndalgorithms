@@ -41,6 +41,19 @@
           }
           this.length++;
         };
+        LinkedList.prototype.toString = function () {
+          // 获取链表的任何元素都必须从第一个节点开头
+          let current = this.head;
+          let listString = "";
+          // 循环获取链表中的所有元素
+          while (current) {
+            listString += "," + current.data;
+            current = current.next;
+          }
+          // 返回最终的结果
+          console.log(listString, "listString");
+          return listString.slice(1);
+        };
       }
       let testLinkedList = new LinkedList();
       testLinkedList.append("Vue.js");
@@ -48,7 +61,7 @@
       testLinkedList.append("React.js");
       console.log(testLinkedList, "testLinkedList--BBB");
       // testLinkedList.append("js");
-      // console.log(testLinkedList, "testLinkedList--");
+      console.log(testLinkedList.toString(), "testLinkedList--toString");
     </script>
   </body>
 </html>
