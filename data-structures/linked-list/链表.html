@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>链表的封装</title>
+  </head>
+  <body>
+    <script>
+      // 封装链表类
+      function LinkedList() {
+        // 内部的类: 节点类
+        function Node(data) {
+          this.data = data;
+          this.next = null;
+        }
+        // 属性
+        this.head = null;
+        this.length = 0;
+        /**append(element)：向链表尾部添加新的项
+         *  链表本身为空的话,新添加的数据就是唯一的节点
+            链表不为空的话, 需要向其他节点的后面追加节点
+         */
+        LinkedList.prototype.append = function (data) {
+          // 1 根据新元素创建节点
+          let newNode = new Node(data);
+          // 2 判断原来的链表是否为空
+          if (this.head === null) {
+            // 链表尾空
+            this.head = newNode;
+          } else {
+            // 定义变量 保存当前找到的节点
+            let current = this.head;
+            console.log(current, "current1");
+            while (current.next) {
+              current = current.next;
+            }
+            // 找到最后一项 将其next赋值给node
+            current.next = newNode;
+            console.log(current, "current2");
+          }
+          this.length++;
+        };
+      }
+      let testLinkedList = new LinkedList();
+      testLinkedList.append("Vue.js");
+      console.log(testLinkedList, "testLinkedList--AAA");
+      testLinkedList.append("React.js");
+      console.log(testLinkedList, "testLinkedList--BBB");
+      // testLinkedList.append("js");
+      // console.log(testLinkedList, "testLinkedList--");
+    </script>
+  </body>
+</html>
