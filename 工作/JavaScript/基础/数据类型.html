@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数据类型</title>
+  </head>
+  <body>
+    <script>
+      /*
+      在js 中 可以分为两类
+      基本数据类型
+      复杂(引用)数据类型
+    */
+      // 基本数据类型
+
+      // Number
+      let initNum = 55; // 十进制55
+      let floatNum = 55.23; // 浮点型
+      // 在数值类型中 存在一种特殊数值NaN 用于本来要返回数值的操作失败了(而不是返回错误)
+
+      // Undefined
+
+      let message;
+      /*
+        undefined 类型只有一个值 就是特殊值undefined 
+        当使用var let 声明变量却没有给初始值 就相当于给变量赋予了 undefined
+        和没有定义的变量还是有区别的
+      */
+      console.log(message); //undefined
+      // console.log(age); // age is not defined
+
+      // string 字符串
+
+      // null
+      /*
+        null类型只有一个值 即特殊值null
+        逻辑上讲 null值表示一个空对象指针 
+        这也就是 给typeOf 传一个null 会返回object 的原因了
+      */
+
+      // boolean  布尔值
+
+      // symbol  没有用过
+
+      /*
+        符号 实例是唯一的 不可变的 符合的用途是保证对象属性使用唯一标识符
+        不会发生属性冲突
+      */
+      let fooSy = Symbol("foo");
+      let otherSy = Symbol("foo");
+      console.log(fooSy == otherSy); //false
+
+      // 引用类型
+
+      // Object
+      let dayou = {
+        name: "张汝斌",
+        age: 19,
+      };
+      // Array
+      // Function
+
+      // 存储区别就是
+
+      // 基本数据类型存储在栈中  在栈中存储的对应的值
+      // 引用类型的对象存储在堆中 在栈中存放的是指向堆内存的地址
+    </script>
+  </body>
+</html>
