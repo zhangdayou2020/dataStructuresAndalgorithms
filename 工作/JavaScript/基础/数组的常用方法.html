@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数组的常用方法</title>
+  </head>
+  <body>
+    <script>
+      const orginArray = [
+        {
+          name: "张汝斌",
+          age: 17,
+        },
+        {
+          name: "张大佑",
+          age: 19,
+        },
+        "光明城市",
+      ];
+      // 增加
+
+      // push() 接收任意数量的参数 并将它们添加到末尾 并且返回数组的最新长度 改变了原数组
+      let conut = orginArray.push({
+        mind: "糟糕透了",
+      });
+      console.log(orginArray, conut);
+
+      // unshift() 在数组开头添加任意多个值 并且返回数组的最新长度
+
+      let colors = new Array();
+      let count2 = colors.unshift("red", "green");
+      let count3 = orginArray.unshift("zhangrubin");
+      console.log(colors, count2);
+      console.log(count3, orginArray);
+
+      // splice 传入三个参数 开始位置 要删除的元素数量 插入的元素 返回空的数组
+      let removed = colors.splice(1, 0, "yellow", "blue");
+      console.log(removed, colors); // removed 是一个空数组
+
+      // concat()
+      // 会创建一个当前元素的副本 然后再把它的参数添加到副本末尾
+      // --------不会影响原数组-------
+      let colors2 = colors.concat("black", "white", "gray");
+      console.log(colors2, colors);
+
+      // 删除
+
+      // pop()
+      // 删除数组的最后一项 同时减少数组的length 返回被删除的哪一项
+      // let popItem = colors.pop();
+      // console.log(popItem, "popItem");
+      // console.log(colors.length);
+
+      // shift()
+      // 用于删除数组的第一项 同时减少数组的length 返回被删除的项
+      // let shiftItem = colors.shift();
+      // console.log(shiftItem, "shiftItem");
+      // console.log(colors.length);
+
+      // splice() 传入两个参数 开始位置 删除元素的数量 返回包含删除元素的数组
+      // let deleteArr = colors.splice(1, 2);
+      // console.log(colors, "colors");
+      // console.log(deleteArr, "deleteArr");
+
+      // slice() 用于创建一个包含原有数组中一个或者多个元素的数组
+      // ---- 不会改变原始数组-----
+      let colorOne = colors.slice(1);
+      let colorTwo = colors.slice(1, 3);
+      console.log(colors, colorOne, colorTwo);
+
+      // 查找
+      // 返回元素坐标或者元素值
+
+      //indexOf()
+      // 返回要查找的元素 在数组中的索引  如果没有找到则返回-1
+      console.log(colors.indexOf("red")); // 0
+      console.log(colors.indexOf("baby")); // -1
+
+      //  includes()  返回要查找元素在数组中的位置 找到true 否则false
+      console.log(colors.includes("red")); // true
+      console.log(colors.includes("baby")); // false
+    </script>
+  </body>
+</html>
