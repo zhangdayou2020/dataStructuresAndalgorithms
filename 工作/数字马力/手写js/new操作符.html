@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New操作符</title>
+  </head>
+  <body>
+    <script>
+      /*
+              new操作符的实现
+
+              1. 创建一个空的js 对象
+              2. 将这个新对象的原型链接到构造函数的原型 以便实现继承
+              3. 将构造函数的作用域赋值给新对象 因此this 指向新对象
+              4. 执行构造函数中的代码 以便初始化对象
+              5. 如果构造函数返回非空对象,则返回该对象 否则返回刚创建的新对象
+
+            */
+
+      function myNew(constructorFn, ...args) {
+        // 1 创建一个空的js 对象
+        const obj = {};
+        // 2. 将这个新对象的原型链接到构造函数的原型 以便实现继承
+        // 静态方法看也将一个指定对象的原型即内部[[prototype]] 设置给另外一个对象或者null
+        // Object.setPrototypeOf(obj,prototype) obj 要设置的对象  prototype 该对象的新原型或者null
+
+        Object.setPrototypeOf(obj, constructorFn.prototype);
+
+        // 3 将构造函数的作用域赋给新对象 并执行构造函数
+        const result = constructorFn.apply(obj, args);
+        // 4 如果构造函数返回非空对象,则返回该对象 否则返回刚创建的新对象
+        console.log(result, "result--");
+        return result instanceof Object ? result : obj;
+      }
+      function Person(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+      const person = myNew(Person, "张汝斌", 18);
+      console.log(person);
+      console.log(person instanceof Person);
+    </script>
+  </body>
+</html>
