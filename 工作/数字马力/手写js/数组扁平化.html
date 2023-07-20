@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数组扁平化</title>
+  </head>
+  <body>
+    <script>
+      /*
+        js 数组扁平化
+        数组扁平化 也叫做数组降维 将一个多维数组变为一组数组
+      */
+
+      // es6 新方法 flat(depth)
+      const orignArr = [[1, 3], 3, [1, 5, [4, 4, 4, [5, 5, 5]]]];
+      console.log(orignArr, "orignArr");
+      const res1 = orignArr.flat(Infinity);
+      console.log(res1, "res1");
+
+      // 也可以使用递归
+      function flattenArray(arr) {
+        let flattened = [];
+        arr.array.forEach((item) => {
+          if (Array.isArray(item)) {
+            flattened = flattened.concat(flattenArray(item));
+          } else {
+            flattened.push(item);
+          }
+        });
+      }
+      // 使用归并 reduce
+      function flattenArrayFunc(arr) {
+        return arr.reduce((pre, cur) => {
+          return pre.concat(Array.isArray(cur) ? flattenArrayFunc(cur) : cur);
+        }, []);
+      }
+      const res2 = flattenArrayFunc(orignArr);
+      console.log(res2, "res2");
+      /*
+        处理大量嵌套数据可以会导致栈溢出的情况 
+        实际应该使用flat 
+      */
+
+      /*
+        再一次记录一下reduce 
+        reduce 可以用于将数组中的元素进行累计操作
+        最终返回一个累计的结果
+        可以传递一个回调函数
+        并可以传递一个初始值
+
+        在使用之前最好判断数组是否为空
+      
+      */
+    </script>
+  </body>
+</html>
