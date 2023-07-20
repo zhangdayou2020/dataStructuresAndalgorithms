@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compose函数</title>
+  </head>
+  <body>
+    <script>
+      /*
+        第一次听说 compose函数
+        compose 就是组合函数 将子函数串联起来 一个函数的输出结果是另外一个函数
+        的输入参数 一旦第一个函数执行了 会想多米诺骨牌一样推倒执行后续函数
+        这样子组合可以使代码更加的简洁
+        易于维护 并且有助于避免多层嵌套函数调用
+      */
+      // 比如说
+      const greeting = (name) => `Hello--${name}`;
+      console.log(greeting("zhangdayou")); //Hellozhangdayou
+      const toUpper = (str) => {
+        console.log(str, "不是字符串");
+        return str.toUpperCase();
+      };
+      console.log(toUpper("zhangdayou")); //ZHANGDAYOU
+      console.log(toUpper(greeting("zhangrubin"))); //HELLOZHANGRUBIN
+
+      /*
+        compose 函数的特点
+        compose 接收函数作为参数 从右往左执行 返回类型函数
+        fn() 全部参数传给最右边函数 得到结果传给倒数第二个 以此传递
+      */
+
+      const composeFunc = function (...func) {
+        //...func 来接收任意属性的函数作为参数 并将他们放到一个数组中
+        if (!func.length) {
+          return (v) => v;
+        }
+        if (func.length === 1) {
+          return func[0];
+        }
+        return func.reduce(
+          (pre, current) =>
+            (...args) =>
+              pre(current(...args))
+        );
+      };
+      const fn = composeFunc(toUpper, greeting);
+
+      console.log(fn("zhangrubin"), "result");
+
+      // 真正去写的时候 才发现一堆坑 后面去慢慢解决吧
+      // 看来下来 还是要再去复习一遍 reduce 归并这个方法了
+    </script>
+  </body>
+</html>

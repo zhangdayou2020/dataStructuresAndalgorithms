@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>模拟实现</title>
+  </head>
+  <body>
+    <script>
+      /*
+        setinterval 用来实现循环定时调用
+        可能存在问题 能用settimeout 去解决吗
+      */
+
+      /*
+        setTimeout 是延迟执行函数
+
+      */
+
+      let startTime = new Date().getTime();
+      let count = 0;
+      // setInterval(() => {
+      //   let i = 0;
+      //   while (i++ < 10000000);
+      // }, 0);
+      // setInterval(function () {
+      //   count++;
+      //   console.log(
+      //     `与原定时间时差间隔${
+      //       new Date().getTime() - (startTime + count * 1000)
+      //     }毫秒`
+      //   );
+      // }, 1000);
+
+      /*
+        setInterval(fn,time)
+
+        fn 在每隔time毫秒后 被推入到任务队列
+        不是直接放入到任务队列中
+        在setInterval 被推入到任务队列中 如果在前面有很多任务或者某个任务
+        等待比较长 比如说网络请求等
+        那么定时器 的执行时间和我们预定他的执行时间不一致
+        如果我们的定时器里面的代码需要进行大量计算的话 花费的时间就比较长
+        上次的代码还没有执行完毕 这次又被推入到任务队列中了
+
+
+
+        setInterval 某些间隔会被跳过（如果上一次执行代码没有执行,那么这次的执行代码
+        将不会被放入到队列 会被跳过）
+
+        多个定时器 会连续执行  上一次代码在队列中等待还没有执行 然后定时器又添加了
+        第二次代码 第二次代码等待的时间和执行时间刚到等于第二次代码的执行
+
+
+        通俗来说 每个setTimeout 产生的任务会直接push到任务队列中
+        而setInterval 在每一次把任务push到任务队列前
+        都要进行判断（看上一次的任务是否在队列中 如果有则不添加 没有则添加
+
+
+        为什么可以使用setTimeout 来取代
+
+
+
+      */
+
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          console.log(i);
+        }, 1000);
+      }
+      /*
+        for 里面的宏任务会被推迟到for循环完成后在执行
+        打印结果同时出现
+        这意味中 多个setTimeout 不会互相影响
+      */
+
+      const mySetInterval = (fn, time) => {
+        const timeout = () => {
+          setTimeout(() => {
+            fn();
+            timeout();
+          }, time);
+        };
+        timeout();
+      };
+      const test = () => {
+        console.log("111");
+      };
+      mySetInterval(test, 1000);
+    </script>
+  </body>
+</html>
