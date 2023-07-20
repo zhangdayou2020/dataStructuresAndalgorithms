@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>发布订阅模式</title>
+  </head>
+  <body>
+    <script>
+      /*
+      我前年面试字节外包的时候 也被问过这个问题 
+      后面自己也就没有再看了
+      今天还是搞定吧
+
+
+      发布-订阅模式  也被称为观察者模式
+      可以在一部编程中替代回调函数的解决方案
+      可以取代对象之间硬编码的通讯机制
+      可以让两个对象松耦合联系在一起
+    */
+
+      // 实现思路
+
+      /*
+      1.指定发布者
+      2.给发布者添加一个缓存列表 用于存放回调函数以便通知订阅者
+        
+      3.最后发布信息的时候 发布者会遍历这个缓存列表 以此触发里面存放的回调函数
+        状态发生变化 以此执行回调函数
+    */
+
+      // 使用对象的模式写
+
+      var saleOffices = {};
+      saleOffices.clientList = [];
+      saleOffices.listen = function (key, fn) {
+        /*
+          看小夏老师 讲解才知道 这个key 用来处理 让那个订阅者收到信息
+        */
+        if (!this.clientList[key]) {
+          this.clientList[key] = [];
+        } else {
+          this.clientList[key].push(fn);
+        }
+        // 将需要监听的函数放到缓存列表中
+        this.clientList.push(fn);
+      };
+      // 当状态被触发的时候
+      saleOffices.trigger = function () {
+        var key = Array.prototype.shift.call(arguments);
+        funcs = this.clientList[key];
+        for (var i = 0; i < funcs.length; i++) {
+          // 让这个缓存列表中的函数依次执行
+          // 这里使用了 apply  这个知识点 正好也能复习了
+          funcs[i].apply(this, arguments);
+        }
+      };
+      // 大佑买房子
+      saleOffices.listen("square88", function (price, squareMeter) {
+        console.log("价格是" + price);
+        console.log("面积是" + squareMeter);
+      });
+      // 汝斌
+      saleOffices.listen("square88", function (price, squareMeter) {
+        console.log("价格是" + price);
+        console.log("面积是" + squareMeter);
+      });
+      // zhangsan
+      saleOffices.listen("square188", function (price, squareMeter) {
+        console.log("价格是" + price);
+        console.log("面积是" + squareMeter);
+      });
+      saleOffices.listen("square188", function (price, squareMeter) {
+        console.log("价格是" + price);
+        console.log("面积是" + squareMeter);
+      });
+      saleOffices.trigger("square188", 10000, "188");
+      // saleOffices.trigger("square88", 10000, "88");
+      // // 类声明
+
+      class Event {
+        constructor() {
+          this.clientList = [];
+        }
+        listen(key, fn) {
+          if (!this.clientList[key]) {
+            this.clientList[key] = [];
+          } else {
+            this.clientList[key].push(fn);
+          }
+        }
+        trigger() {
+          var key = Array.prototype.shift.call(arguments);
+          funcs = this.clientList[key];
+          for (var i = 0; i < funcs.length; i++) {
+            // 让这个缓存列表中的函数依次执行
+            // 这里使用了 apply  这个知识点 正好也能复习了
+            funcs[i].apply(this, arguments);
+          }
+        }
+      }
+
+      // class EventEmitter {
+      //   constructor() {
+      //     this.events = {};
+      //   }
+      //   //实现订阅
+
+      //   on(type, callback) {
+      //     if (!this.events[type]) {
+      //       this.events[type] = [callback];
+      //     } else {
+      //       this.events[type] = push(callback);
+      //     }
+      //   }
+
+      //   // 删除订阅
+      //   off(type, callback) {
+      //     if (!this.events[type]) return;
+      //     this.events[type] = this.events[type].filter((item) => {
+      //       return item !== callback;
+      //     });
+      //   }
+
+      //   // 只 执行一次订阅事件
+      //   once(type, callback) {
+      //     function fn() {
+      //       callback();
+      //       this.off(type, fn);
+      //     }
+      //     this.on(type, fn);
+      //   }
+
+      //   // 触发事件
+      //   emit(type, ...rest) {
+      //     this.events[type] &&
+      //       this.events[type].forEach((fn) => fn.apply(this, rest));
+      //   }
+      // }
+
+      // // 写的我是一头的雾水
+      // // 先跑起来看看吧
+
+      // const event = new EventEmitter();
+      // console.log(event, "event");
+      // const handle = (...rest) => {
+      //   console.log(rest, "rest");
+      // };
+      // event.on("click", handle);
+      // event.emit("click", 1, 2, 3, 4);
+      // event.off("click", handle);
+      // console.log(event, "event");
+      // event.once("dbClick", () => {
+      //   console.log(123456);
+      // });
+    </script>
+  </body>
+</html>
