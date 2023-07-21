@@ -80,6 +80,18 @@
       }
       const throttleScroll = throttle(handleScroll, 1000);
       window.addEventListener("scroll", throttleScroll);
+
+      /*
+        最近 ...args 写js 的过程中经常看到
+
+        args 是一个包含了传入所有回调函数的参数数组
+
+        ...args 剩余参数的语法
+
+        func.apply(this,args)
+        使用apply 方法来将收集到的 参数数组传递给回调函数
+      
+      */
     </script>
   </body>
 </html>
