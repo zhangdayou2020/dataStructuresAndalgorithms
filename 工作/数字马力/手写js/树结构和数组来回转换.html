@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数组和树结构之间转换</title>
+  </head>
+  <body>
+    <script>
+      /*
+        这个结构第一次接触应该就是组织机构的时候 那些树结构
+        今年岗位的时候 拼装我当时处理失败了,也是亚雄帮忙搞定了
+        早上刚看了讲解一遍 
+        这会我自己给写出来一下
+
+        还是没有写出来 发现这必须要动手去写 觉得是看懂了 一去上手就踩坑
+        不多写真不行
+      */
+      let treeData = [
+        {
+          id: 1,
+          parentId: null,
+          name: "董事会",
+        },
+        {
+          id: 2,
+          parentId: null,
+          name: "技术部",
+          children: [
+            {
+              id: 21,
+              parentId: 2,
+              name: "后端技术部",
+              children: [
+                {
+                  id: 211,
+                  parentId: 21,
+                  name: "java技术",
+                },
+                {
+                  id: 212,
+                  parentId: 21,
+                  name: "go技术",
+                },
+              ],
+            },
+            {
+              id: 22,
+              parentId: 2,
+              name: "前端技术部",
+              children: [
+                {
+                  id: 221,
+                  parentId: 22,
+                  name: "react.js",
+                },
+                {
+                  id: 222,
+                  parentId: 22,
+                  name: "vue.js",
+                },
+              ],
+            },
+            {
+              id: 23,
+              parentId: 2,
+              name: "运维技术部",
+            },
+          ],
+        },
+        {
+          id: 3,
+          parentId: null,
+          name: "产品部",
+        },
+        {
+          id: 4,
+          parentId: null,
+          name: "公关部",
+          children: [
+            {
+              id: 41,
+              parentId: 4,
+              name: "女公关部",
+            },
+            {
+              id: 42,
+              parentId: 4,
+              name: "男公关部",
+            },
+          ],
+        },
+      ];
+      /*
+        早上来又写了一个半小时 后面还是又看下老师的视频才知道
+      */
+      const treeToArray = (treeData) => {
+        console.log(treeData, "treeData");
+        return treeData.reduce((prev, cur) => {
+          console.log(prev, "prev");
+          console.log(cur, "cur");
+          if (!cur.children) {
+            // 没有子节点直接push
+            prev.push(cur);
+          } else {
+            const subList = treeToArray(cur.children);
+            // 将children展开以此塞进去
+            // 删除cur中children 属性 消除children嵌套
+            delete cur.children;
+            prev.push(cur, ...subList);
+          }
+          return prev;
+        }, []);
+      };
+      // const resArray = treeToArray(treeData);
+      // const res1Array = treeToArray([]);
+      // console.log(resArray, "resArray");
+      // console.log(res1Array, "res1Array");
+
+      // 将数组改成树结构
+      const array = [
+        {
+          id: 1,
+          parentId: null,
+          name: "董事会",
+        },
+        {
+          id: 2,
+          parentId: null,
+          name: "技术部",
+        },
+        {
+          id: 21,
+          parentId: 2,
+          name: "后端技术部",
+        },
+        {
+          id: 211,
+          parentId: 21,
+          name: "java技术",
+        },
+        {
+          id: 212,
+          parentId: 21,
+          name: "go技术",
+        },
+        {
+          id: 22,
+          parentId: 2,
+          name: "前端技术部",
+        },
+        {
+          id: 221,
+          parentId: 22,
+          name: "react.js",
+        },
+        {
+          id: 222,
+          parentId: 22,
+          name: "vue.js",
+        },
+        {
+          id: 23,
+          parentId: 2,
+          name: "运维技术部",
+        },
+        {
+          id: 3,
+          parentId: null,
+          name: "产品部",
+        },
+        {
+          id: 4,
+          parentId: null,
+          name: "公关部",
+        },
+        {
+          id: 41,
+          parentId: 4,
+          name: "女公关部",
+        },
+        {
+          id: 42,
+          parentId: 4,
+          name: "男公关部",
+        },
+      ];
+
+      /*
+        将数组改成树结构的
+      */
+      const arrayToTree = (arr, parentId = null) => {
+        // 需要每一次查看一下 父节点 默认是null的
+        console.log(arr, "arr");
+
+        return arr.reduce((prev, cur) => {
+          console.log(prev, "prev");
+          console.log(cur, "cur");
+          if (cur.parentId === parentId) {
+            // 当前的id 作为parentId去查找  我这点就是写错了
+            const children = arrayToTree(arr, cur.id);
+            if (children && children.length > 0) {
+              cur.children = children;
+            }
+            prev.push(cur);
+          }
+          // 一定要记得将prev返回 作为下一次迭代的开始
+          return prev;
+        }, []);
+      };
+      const res3 = arrayToTree(array);
+      console.log(res3, "res3");
+    </script>
+  </body>
+</html>
