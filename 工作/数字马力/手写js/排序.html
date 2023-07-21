@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const orignNums = [
+        6, 1, 44, 111, 234, 6, 678, 541, 6666, 768, 235, 2222, 1245, 211, 55134,
+        224667, 124677,
+      ];
+      /*
+      冒泡排序
+      1 重复地遍历要排序的元素 如果前一个元素大于后一个元素 则交换他们的位置
+      2 遍历整个数组 知道没有任何一对需要交换位置
+
+      写了半天没有写出来 很尴尬 我觉得自己应该可以做出来的
+      再分析分析 梳理下 
+
+      时间复杂度为O(N^2) 其中N是待排序列表的长度
+      这是最坏的情况下 需要执行N轮比较
+      每一轮比较都需要遍历N个元素
+
+    */
+
+      function bubbleSort(arr) {
+        console.log(arr, "arr");
+        let isSwapped;
+        // i 来控制外层循环
+        for (let i = 0; i < arr.length - 1; i++) {
+          isSwapped = false;
+          for (let j = 0; j < arr.length - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+              // 交换位置
+              [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+              /*
+              GPT 给的解构赋值写法来交换两个元素的位置
+              
+              */
+              isSwapped = true;
+            }
+          }
+          // 如果这一轮没有发生交换说明排好序了
+          if (!isSwapped) {
+            break;
+          }
+        }
+        console.log(arr, "arr");
+        return arr;
+      }
+
+      // 示例
+      // const unsortedArray = [64, 34, 25, 12, 22, 11, 90];
+      // const sortedArray = bubbleSort(orignNums);
+      // console.log(sortedArray); // Output: [11, 12, 22, 25, 34, 64, 90]
+
+      /*
+        选择排序
+        选择排序是基本思想是 在未排序的部分中 
+        找到最大或者最小的元素 然后将其放到已经排序部分的末尾
+        以此类推 知道整个数组排序完成
+
+        实现思想
+         1  首先找到数组中最小或者最大的元素 并将其给第一个元素交换位置
+          将该元素视为已经排序的部分
+         2  接下来,将剩余未排序的部分找到最大或者最小,并将其给第二个交换位置
+          也将该元素视为已经排序的部分
+         3 以此类推不断, 选择未排序的部分
+      */
+      function selectSort(arr) {
+        console.log(arr, "arr");
+        const len = arr?.length;
+        // 定于minIndex 缓存当前区间最小索引
+        let minIndex;
+        for (let i = 0; i < len; i++) {
+          // 初始minIndex 为当前区间的第一个元素
+          minIndex = i;
+          // i j 分别是当前区间的左边界和右边界
+          for (let j = i; j < len; j++) {
+            // 若 j处比当前最小值都小 则更新最小值
+            if (arr[j] < arr[minIndex]) {
+              minIndex = j;
+            }
+          }
+          // 如果minIndex 对应的元素不是目前区间头部元素 则交换
+          if (minIndex !== i) {
+            [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
+          }
+        }
+        return arr;
+      }
+      const resSelectSort = selectSort(orignNums);
+      console.log(resSelectSort, "resSelectSort");
+    </script>
+  </body>
+</html>
