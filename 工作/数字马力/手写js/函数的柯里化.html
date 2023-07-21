@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>柯里化</title>
+  </head>
+  <body>
+    <script>
+      /*
+        函数的柯里化 Curring
+        是一种将接受多个参数的函数转换为接受单一参数的函数
+        并返回一个新函数的技术
+        这种转换过程通过对原始函数的多个参数进行逐步调用
+        每一次返回一个新函数来实现
+      */
+
+      function currying(func) {
+        // 接收func函数作为参数
+        // 返回curried
+        return function curried(...args) {
+          // 如果curried 函数首先检查传入的参数数量是否大于
+          // fn函数的参数数量
+          if (args.length >= func.length) {
+            return func(...args);
+          } else {
+            return function (...moreArgs) {
+              return curried(...args, ...moreArgs);
+            };
+          }
+        };
+      }
+      function add(a, b, c) {
+        return a + b + c;
+      }
+      const curriedAdd = currying(add);
+      console.log(curriedAdd(1)(2)(3));
+    </script>
+  </body>
+</html>
