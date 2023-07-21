@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>深拷贝</title>
+  </head>
+  <body>
+    <script>
+      /*
+          写过很多次深拷贝 每一次面试前都需要重新学习一遍
+          唯一一次手写 还是在字节外包面试时候写的
+
+          深拷贝是创建一个新对象 将原始复制的所有属性都递归复制到新对象上
+          而不是直接复制引用
+          它需要确保复制的对象和原始的对象彼此对立 互不影响
+
+      */
+      /*
+
+        WeakMap 是ES6 引入的新的集合类型
+        一种特殊的Map 用于存储对象键值对
+        WeakMap 的键必须是对象 而值可以是任意类型的值
+        和Map不同的是 WeakMap中的键是弱引用
+        意味着 当键对象没有被其他引用时候,它会被垃圾回收机制给回收
+        从而释放内存
+
+
+        主要的特点:
+         1 弱引用:当键对象没有被其他引用时候,它会被垃圾回收机制给回收
+         2.不可以迭代
+         3.不可遍历
+         主要解决处理缓存和存储私有数据 避免内存泄漏和安全问题
+
+         键必须是对象
+      */
+
+      // function deepClone(obj, copieMap = new WeakMap()) {
+      //   console.log(obj);
+      //   console.log(copieMap, "copieMap");
+      //   if (obj === null || typeof obj !== "object") {
+      //     // 如果obj 是基本数据类型或者null 直接返回不需要拷贝了
+      //     return obj;
+      //   }
+      //   // 处理循环引用 避免无限递归
+      //   if (copieMap.has(obj)) {
+      //     return copieMap.get(obj);
+      //   }
+      //   console.log(copieMap.get(obj), "copieMap.get(obj)");
+      //   let newObj;
+      //   if (Array.isArray(obj)) {
+      //     newObj = [];
+      //   } else {
+      //     newObj = {};
+      //   }
+
+      //   // 将当前对象添加到 copieMap中标记为已经复制了
+      //   copieMap.set(obj, newObj);
+      //   for (let key in obj) {
+      //     if (obj.hasOwnProperty(key)) {
+      //       // 递归深拷贝对象的每个属性
+      //       newObj[key] = deepClone(obj[key], copieMap);
+      //     }
+      //   }
+      //   return newObj;
+      // }
+
+      // WeakMap 没有搞懂 还是使用最传统的深拷贝  我看看自己能不能写出来
+      function deepClone(orignData) {
+        if (orignData === null || typeof orignData !== "object") {
+          return orignData;
+        }
+        let newObj;
+        if (Array.isArray(orignData)) {
+          newObj = [];
+        } else {
+          newObj = {};
+        }
+        for (let key in orignData) {
+          if (orignData.hasOwnProperty(key)) {
+            newObj[key] = deepClone(orignData[key]);
+          }
+        }
+        return newObj;
+      }
+
+      const array = [
+        {
+          id: 1,
+          parentId: null,
+          name: "董事会",
+        },
+        {
+          id: 2,
+          parentId: null,
+          name: "技术部",
+        },
+        {
+          id: 21,
+          parentId: 2,
+          name: "后端技术部",
+        },
+        {
+          id: 211,
+          parentId: 21,
+          name: "java技术",
+        },
+        {
+          id: 212,
+          parentId: 21,
+          name: "go技术",
+        },
+        {
+          id: 22,
+          parentId: 2,
+          name: "前端技术部",
+        },
+        {
+          id: 221,
+          parentId: 22,
+          name: "react.js",
+        },
+        {
+          id: 222,
+          parentId: 22,
+          name: "vue.js",
+        },
+        {
+          id: 23,
+          parentId: 2,
+          name: "运维技术部",
+        },
+        {
+          id: 3,
+          parentId: null,
+          name: "产品部",
+        },
+        {
+          id: 4,
+          parentId: null,
+          name: "公关部",
+        },
+        {
+          id: 41,
+          parentId: 4,
+          name: "女公关部",
+        },
+        {
+          id: 42,
+          parentId: 4,
+          name: "男公关部",
+        },
+      ];
+      const treeData = [
+        {
+          id: 1,
+          parentId: null,
+          name: "董事会",
+        },
+        {
+          id: 2,
+          parentId: null,
+          name: "技术部",
+          children: [
+            {
+              id: 21,
+              parentId: 2,
+              name: "后端技术部",
+              children: [
+                {
+                  id: 211,
+                  parentId: 21,
+                  name: "java技术",
+                },
+                {
+                  id: 212,
+                  parentId: 21,
+                  name: "go技术",
+                },
+              ],
+            },
+            {
+              id: 22,
+              parentId: 2,
+              name: "前端技术部",
+              children: [
+                {
+                  id: 221,
+                  parentId: 22,
+                  name: "react.js",
+                },
+                {
+                  id: 222,
+                  parentId: 22,
+                  name: "vue.js",
+                },
+              ],
+            },
+            {
+              id: 23,
+              parentId: 2,
+              name: "运维技术部",
+            },
+          ],
+        },
+        {
+          id: 3,
+          parentId: null,
+          name: "产品部",
+        },
+        {
+          id: 4,
+          parentId: null,
+          name: "公关部",
+          children: [
+            {
+              id: 41,
+              parentId: 4,
+              name: "女公关部",
+            },
+            {
+              id: 42,
+              parentId: 4,
+              name: "男公关部",
+            },
+          ],
+        },
+      ];
+
+      const orignObj = {
+        name: "张汝斌",
+        arrayData: [
+          {
+            id: 1,
+            parentId: null,
+            name: "董事会",
+          },
+          {
+            id: 2,
+            parentId: null,
+            name: "技术部",
+            children: [
+              {
+                id: 21,
+                parentId: 2,
+                name: "后端技术部",
+                children: [
+                  {
+                    id: 211,
+                    parentId: 21,
+                    name: "java技术",
+                  },
+                  {
+                    id: 212,
+                    parentId: 21,
+                    name: "go技术",
+                  },
+                ],
+              },
+              {
+                id: 22,
+                parentId: 2,
+                name: "前端技术部",
+                children: [
+                  {
+                    id: 221,
+                    parentId: 22,
+                    name: "react.js",
+                  },
+                  {
+                    id: 222,
+                    parentId: 22,
+                    name: "vue.js",
+                  },
+                ],
+              },
+              {
+                id: 23,
+                parentId: 2,
+                name: "运维技术部",
+              },
+            ],
+          },
+          {
+            id: 3,
+            parentId: null,
+            name: "产品部",
+          },
+          {
+            id: 4,
+            parentId: null,
+            name: "公关部",
+            children: [
+              {
+                id: 41,
+                parentId: 4,
+                name: "女公关部",
+              },
+              {
+                id: 42,
+                parentId: 4,
+                name: "男公关部",
+              },
+            ],
+          },
+        ],
+      };
+      const cloneArray = deepClone(array);
+      console.log(cloneArray, "cloneArray");
+    </script>
+  </body>
+</html>

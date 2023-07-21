@@ -31,6 +31,12 @@
         // 3 将构造函数的作用域赋给新对象 并执行构造函数
         const result = constructorFn.apply(obj, args);
         // 4 如果构造函数返回非空对象,则返回该对象 否则返回刚创建的新对象
+
+        /*
+          ----- 第四步 我其实从来没有考虑过 为什么要这么做
+          这种好处可以 构造函数可以根据特定条件来返回不同类型的对象
+          
+        */
         console.log(result, "result--");
         return result instanceof Object ? result : obj;
       }
