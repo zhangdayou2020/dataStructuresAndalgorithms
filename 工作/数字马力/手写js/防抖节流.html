@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>防抖节流</title>
+  </head>
+  <body>
+    <script>
+      /*
+    
+       手写防抖和节流 应该是必备技能
+       平时的搜索和交办操作理论上都应该做的
+       有时候 总是懒 没有用
+        */
+
+      /*
+        防抖 debounce
+        连续触发事件, 但是在特定的时间内只执行最后一次
+
+        比如说 设定1000毫秒执行 当触发了事件,它就会在1000毫秒以后执行
+        但是当还剩下500毫秒的时候 又触发了该事件 
+        那么就需要重新开始1000毫秒后 再执行
+
+        核心是 从新开始
+
+        应用场景:
+         1 搜索框的搜索输入
+         2 文本编辑器实时保存
+
+         实现思路 
+         1. 设置一个定时器变量 用于存储延迟执行的标记
+         2. 在事件触发时候,清除之间设置的定时器
+         3. 重新设置一个新的定时器 延迟执行回调函数
+       */
+
+      function debounce(func, delay) {
+        let timeoutId;
+        return function (...args) {
+          clearTimeout(timeoutId);
+          timeoutId = setTimeout(() => {
+            func.apply(this, args);
+          }, delay);
+        };
+      }
+      function handleResize() {
+        console.log("window has been resized");
+      }
+      const debounceResize = debounce(handleResize, 1000);
+      window.addEventListener("resize", debounceResize);
+      /*
+        节流
+        连续触发事件 但是在设定的一段时间内 只执行一次函数
+
+        比如说 设定1000毫秒执行  那么在1000毫秒内出发多次 也只执行了一次
+       
+        不能打断
+
+        高频事件 
+         1 快速点击 鼠标滑动 resize事件  scroll事件
+         2 下拉加载
+         3 视频播放记录时间
+       */
+
+      function throttle(func, delay) {
+        let isThrottled = false;
+        return function (...args) {
+          if (isThrottled) return;
+          isThrottled = true;
+          func.apply(this, args);
+          setTimeout(() => {
+            isThrottled = false;
+          }, delay);
+        };
+      }
+
+      function handleScroll() {
+        console.log("window is scrolling");
+      }
+      const throttleScroll = throttle(handleScroll, 1000);
+      window.addEventListener("scroll", throttleScroll);
+    </script>
+  </body>
+</html>
