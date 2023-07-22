@@ -39,8 +39,61 @@
         // 我这边还少加了一个基准元素
         return [...left, pivot, ...right];
       }
-      const resQuickSort = quickSort(orignNums);
-      console.log(resQuickSort, "quickSort");
+      // const resQuickSort = quickSort(orignNums);
+      // console.log(resQuickSort, "quickSort");
+
+      /*
+        归并排序
+        核心思想是将未排序的数组逐步划分为较小的子数组
+        然后将这些子数组合并成有序的数组
+      */
+      function mergeSort(arr) {
+        /*
+          归并关键在于merge函数  它用于将两个有序的子数组合并成一个有序的数组
+          在归并的过程中,逐步划分数组直至只包含一个元素
+          然后再逐层合并子数组 直到得到完整的有序数组
+        */
+        // 我开始没有判断arr.length 小于等于1的时候 直接就进入了死循环了
+        if (arr.length <= 1) {
+          return arr;
+        }
+        console.log(arr);
+        // 将数组分为两个子数组
+        const mid = Math.floor(arr.length / 2);
+        const left = arr.slice(0, mid);
+        const right = arr.slice(mid);
+        console.log(left, right);
+
+        // 再一次递归左右子数组进行排序
+        const sortLeft = mergeSort(left);
+        const sortRight = mergeSort(right);
+
+        // 将两个有序的子数组合并成一个有序的数组
+        return merge(sortLeft, sortRight);
+      }
+      function merge(left, right) {
+        let result = [];
+        let leftIndex = 0;
+        let rightIndex = 0;
+
+        // 将两个有序数组按照顺序合并
+        while (leftIndex < left.length && rightIndex < right.length) {
+          if (left[leftIndex] < right[rightIndex]) {
+            result.push(left[leftIndex]);
+            leftIndex++;
+          } else {
+            result.push(right[rightIndex]);
+            rightIndex++;
+          }
+        }
+        result = result
+          .concat(left.slice(leftIndex))
+          .concat(right.slice(rightIndex));
+        console.log(result, "result拆分--");
+        return result;
+      }
+      const resMergeSort = mergeSort(orignNums);
+      console.log(resMergeSort, "resMergeSort");
     </script>
   </body>
 </html>
