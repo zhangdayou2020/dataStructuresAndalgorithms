@@ -92,8 +92,86 @@
         }
         return arr;
       }
-      const resSelectSort = selectSort(orignNums);
-      console.log(resSelectSort, "resSelectSort");
+      // const resSelectSort = selectSort(orignNums);
+      // console.log(resSelectSort, "resSelectSort");
+
+      /*
+        插入排序
+
+        工作原理是将一个未排序的元素 逐个插入到已排序部分的正确位置上
+        从而逐步构建出有序的结果
+      */
+      function insertionSort(arr) {
+        // 首先 我们从第一个元素开始 认为第一个元素已经是排列好的
+        console.log(arr, "arr");
+        let len = arr.length;
+        for (let i = 1; i < len; i++) {
+          // 将当前元素 存储在临时变量中 以便后续的插入操作
+          let createElement = arr[i];
+          // 初始化一个指针 指向当前元素的第一个位置
+          let j = i - 1;
+
+          // 从已经排序的部分开始向前遍历 找到当前元素应该插入的位置
+          // 并将大于当前元素的值往后移动 为当前元素腾出插入的位置
+          while (j >= 0 && arr[j] > createElement) {
+            arr[j + 1] = arr[j];
+            j--;
+          }
+          // 此时 已经找到了当前元素的正确位置 将其插入
+          arr[j + 1] = createElement;
+        }
+        return arr;
+      }
+      // const resInsertionSort = insertionSort(orignNums);
+      // console.log(resInsertionSort, "resInsertionSort");
+
+      /*
+        希尔排序
+
+        是插入排序的改进版本 
+        通过将数组分成多个子序列来进行排序
+        逐步减小序列的长度 直到最后将整个数组排序完成
+
+        希尔排序的核心思想是通过 比较距离较远的元素来交换位置
+        从而快速减少逆序 
+      */
+      function shellSort(arr) {
+        const len = arr.length;
+        // 使用希尔增量
+        // 也是跟着codewhy 视频中学了 还是一知半解吧
+        let gap = Math.floor(n / 2);
+        // 逐步 缩小增量 直到增量为1
+        while (gap > 0) {
+          // 对每个子序列进行插入排序
+          for (let i = gap; i < n; i++) {
+            let temp = arr[i];
+            let j = i;
+            // 对当前子序列进行插入排序
+            // j>=gap 为了不超出边界
+            while (j >= gap && arr[j - gap] > temp) {
+              arr[j] = arr[j - gap];
+              /*
+              用于当前 子序列中进行插入排序时候移动元素的位置
+
+              在希尔排序的每个步骤中 我们使用一个增量gap
+              初始值通常是数组长度的一半
+              在每个增量步骤中 我们将数组划分为若干个子序列
+              每个子序列间隔gap元素
+
+
+              假设[5,2,4,6,1,3]
+              当前增量为2 的时候  我第一次还以为gpt 写错了 应该是3呢
+              [5,4,1] [2,6,3]
+
+              */
+              j -= gap;
+            }
+          }
+        }
+        return arr;
+      }
+      const resShellSort = shellSort(orignNums);
+      console.log(resShellSort, "resShellSort");
     </script>
   </body>
 </html>
