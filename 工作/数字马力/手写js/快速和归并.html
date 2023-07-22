@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const orignNums = [
+        6, 1, 44, 111, 234, 6, 678, 541, 6666, 768, 235, 2222, 1245, 211, 55134,
+        224667, 124677,
+      ];
+      /*
+        选择一个基准元素
+        通常是数组的第一个元素
+        然后将数组分为两个部分 
+        一部分是小于基准元素的数组
+        一部分是大于基准元素的数组
+        然后将递归量两个子数组进行排序
+        我觉得 我上去都能写了
+      */
+      function quickSort(arr) {
+        console.log(arr, "arr");
+        const len = arr.length;
+        // 基准元素
+        const pivot = arr[0];
+        const left = [];
+        const right = [];
+        for (let i = 1; i < len; i++) {
+          if (arr[i] > pivot) {
+            // 大于基准元素
+            right.push(arr[i]);
+          } else {
+            left.push(arr[i]);
+          }
+        }
+        console.log(left, right);
+        // 我这边还少加了一个基准元素
+        return [...left, pivot, ...right];
+      }
+      const resQuickSort = quickSort(orignNums);
+      console.log(resQuickSort, "quickSort");
+    </script>
+  </body>
+</html>
