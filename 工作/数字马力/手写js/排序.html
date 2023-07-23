@@ -168,8 +168,64 @@
         }
         return arr;
       }
-      const resShellSort = shellSort(orignNums);
-      console.log(resShellSort, "resShellSort");
+      // const resShellSort = shellSort(orignNums);
+      // console.log(resShellSort, "resShellSort");
+
+      const createArray = (number, range) => {
+        let res = [];
+        for (let i = 0; i < number; i++) {
+          let randomNum = Math.floor(Math.random() * range);
+          res.push(randomNum);
+        }
+        return res;
+      };
+      // 正好我自己写一个生成随机数的方法
+      const createNums = createArray(20, 100);
+      console.log(createNums, "createNums");
+
+      // 自己再练一下冒泡排序
+      function bubbleSortTest(arr) {
+        if (!arr?.length) {
+          return arr;
+        }
+        for (let i = 0; i < arr.length - 1; i++) {
+          for (let j = 0; j < arr.length - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+              [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+            }
+          }
+        }
+        return arr;
+      }
+      // const test = bubbleSortTest(createNums);
+      // console.log(test, "test--");
+
+      //
+      function selectSortTest(arr) {
+        console.log(arr);
+        if (!arr?.length) {
+          return arr;
+        }
+        /*
+          定义索引
+
+          刚刚看了一眼 自己的边界问题 没有考虑到 还有个头部问题没有考虑到
+          js 这类算法 真是需要日复一日去刷 脑子才能活泛起来
+        */
+        for (let i = 0; i < arr.length - 1; i++) {
+          let minIndex;
+          for (let j = 0; j < arr?.length - 1 - i; j++) {
+            console.log(arr[j], arr[minIndex]);
+            if (arr[j] > arr[minIndex]) {
+              [arr[j], arr[minIndex]] = [arr[minIndex], arr[j]];
+              minIndex = j;
+            }
+          }
+        }
+        console.log(arr);
+      }
+      const test1 = selectSortTest(createNums);
+      console.log(test1, "test1--");
     </script>
   </body>
 </html>

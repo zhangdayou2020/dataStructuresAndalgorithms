@@ -34,7 +34,8 @@
          2. 在事件触发时候,清除之间设置的定时器
          3. 重新设置一个新的定时器 延迟执行回调函数
        */
-
+      // 防抖节流 都需要重新修改this 的指向问题
+      // 我总是记不住
       function debounce(func, delay) {
         let timeoutId;
         return function (...args) {
