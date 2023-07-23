@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>判断对称数</title>
+  </head>
+  <body>
+    <script>
+      /*
+      不多刷题 真是不行啊
+      这个判断对称数 完全没有考虑过
+
+      实现思路  将数字转换为字符串
+      回文字符串是指 从前往后和从后往前读都是相同的字符串
+
+      先使用split"" 将这些字符串拆分成单个字符数组
+      接着使用reverse() 方法反转这些字符数组顺序
+      最后通过join再将这些字符串数组合并成一个字符串
+      跟原始的进行比较
+
+
+      join  reverse  split 这三个方法 真是不用都忘了
+      join根据分隔符将数组拼接成字符串
+      reverse  翻转数组
+      split 使用分隔符将字符串分割成字符串数组
+    */
+      function isSymmetry(number) {
+        let orignData = String(number);
+        let handleData = orignData.split("").reverse().join("");
+        if (orignData === handleData) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      const test1 = isSymmetry(1234);
+      const test2 = isSymmetry(121);
+      console.log(test1, test2);
+    </script>
+  </body>
+</html>
