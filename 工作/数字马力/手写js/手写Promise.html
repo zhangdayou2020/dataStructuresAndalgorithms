@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise</title>
+    <script src="./promise/index.js"></script>
+  </head>
+  <body>
+    <script>
+      let p = new HD((resolve, reject) => {
+        setTimeout(() => {
+          // resolve("解决了吗");
+          reject("拒绝了吗");
+        }, 2000);
+      }).then(
+        (value) => {
+          console.log(valueABC);
+        },
+        (reason) => {
+          console.log("出现了错误error");
+          console.log(reason);
+        }
+      );
+      console.log("zhangdayou");
+    </script>
+  </body>
+</html>
