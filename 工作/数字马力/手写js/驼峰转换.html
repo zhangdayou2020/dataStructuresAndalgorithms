@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>驼峰转换</title>
+  </head>
+  <body>
+    <script>
+      /*
+      将一串字符串驼峰化 
+      第一个-后的字母无需转换小写为大写
+      其他的-后的字母需要小写转大写
+
+      比如说  font-size 为fontSize
+      -weront-size 为 werontSize
+
+      GPT 给的代码 发现不跑一下是不行的
+      不是泡一下 我都发现不了她的错误
+    */
+      function camelCase(str) {
+        // 处理首个位空字符的情况
+        if (str[0] === "-") {
+          str = str.slice(1);
+        }
+        const words = str.split("-");
+        console.log(words, str);
+        const camelizeWords = words.map((word, index) => {
+          if (index === 0) {
+            // 表示第一个单词 不需要进行驼峰转换直接返回原单词
+            console.log(word, "word第一个单词");
+            return word;
+          } else {
+            return word.charAt(0).toUpperCase() + word.slice(1);
+          }
+        });
+        return camelizeWords.join("");
+      }
+      const result = camelCase("font-size ");
+      const result1 = camelCase("-weront-size");
+      console.log(result, result1);
+
+      /*
+        一串字符串 当字符[a-zA-Z]重复,输出true 否则false
+        比如说 dssfssf->true
+        213333ghkda ->false
+      */
+      function strTest(str) {
+        str = str.match(/[a-zA-z]/g);
+        console.log(str, "str");
+        for (let i = 0; i < str.length - 1; i++) {
+          console.log(str[i], "str[i]");
+          console.log(str[i + 1], "str[i+1]");
+          if (str[i] == str[i + 1]) {
+            console.log("重复吗");
+            return true;
+          }
+        }
+        /*
+        
+          return 函数的位置写错了 
+        */
+        return false;
+      }
+      const result3 = strTest("dssfssf");
+      const result4 = strTest("213333ghkda");
+      console.log(result3, result4);
+    </script>
+  </body>
+</html>
