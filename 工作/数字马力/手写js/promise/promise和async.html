@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise和Async</title>
+  </head>
+  <body>
+    <script>
+      /*
+    经常会被问到 promise 和 async
+    */
+
+      /*
+      Promise 处理异步操作对象
+      表示一个异步操作的最终的结果
+      可能是成功也可能是失败
+      进行中 pending
+      已成功 fulfilled
+      已失败 rejected
+
+      使用promise 的 then 方法 可以在Promise 成功时候执行回调函数
+      在失败的时候 执行另外一个函数
+
+      可以使用catch 来捕获错误
+      也可以使用finally 来指定无论是成功还是失败都要执行的函数
+
+      promise.all
+       并行执行多个Promise 当所有都成功了 才返回一个包含所有结果的数组
+      一旦有一个Promise 失败了 返回的Promise 立即失败
+
+      promise.race
+      并行执行多个Promise 一旦有一个Promise成功或者失败
+      返回的promise 就会立即成功或者失败
+    */
+
+      /*
+    Async Await
+    
+    async 声明一个函数是异步函数 异步函数会返回一个promise
+    在异步函数中 可以使用await 暂停函数的执行
+    等待一个promise成功后再执行
+    await 只能在异步函数内部中使用
+
+
+    缺陷 
+      错误处理不够灵活
+      在异步函数中中使用try catch 只能捕获函数当前的错误
+      如果在函数调用链中其他地方出现错误 很难统一捕获和处理
+
+
+      不支持并行多个异步操作
+      在一个async 函数中  await 会阻塞后面的代码执行
+      无法同时执行多个异步操作
+    */
+    </script>
+  </body>
+</html>

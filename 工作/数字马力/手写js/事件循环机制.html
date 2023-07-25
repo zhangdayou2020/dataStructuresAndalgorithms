@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>事件循环</title>
+  </head>
+  <body>
+    <script>
+      /*
+    eventLoop 为了处理异步任务和回调而设计的
+    确保JavaScript运行时候能够高效的执行异步操作而不会阻塞主线程
+     
+    执行栈
+       是一个存储函数调用的栈结构,用于管理函数的执行顺序
+       在代码执行过程中,函数调用会根据先进后出的顺序进入和离开栈
+    消息队列
+       存储待处理信息的队列
+       每个消息都与一个回调函数相关联
+       当异步任务完成以后,会将其对应的回调函数放入到消息队列中
+       等待处理
+
+    事件循环  
+       它不断从消息队列中取出一个消息(回调函数)
+       将其放入到执行栈中执行 这个过程是循环执行的
+ 
+      宏任务：
+        大多数的任务 
+        比如说说 定时器 setTimeout
+        事件绑定  回调函数
+      微任务
+       promise  async  nextTick
+
+       为什么要引入 微任务
+       微任务的引入 是为了解决异步回调问题
+       假设只有宏任务  那么每个宏任务执行完回调函数也放入到宏任务队列中
+       这就造成队列过长 回调时间时间过长
+
+
+
+    */
+      setTimeout(function () {
+        console.log(1);
+      }, 0);
+
+      new Promise(function (resolve, reject) {
+        console.log(2);
+        resolve();
+      })
+        .then(function () {
+          console.log(3);
+        })
+        .then(function () {
+          console.log(4);
+        });
+
+      console.log(6);
+    </script>
+  </body>
+</html>
