@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>This</title>
+  </head>
+  <body>
+    <script>
+      /*
+      在不同的上下文中 this会指向不同的对象
+      在js中 this的值是在函数被调用的时候确定的 
+      而不是在函数定义的时候确定的
+      因此this的指向是动态的 取决于函数的调用方式
+
+
+      1。this的规则
+
+        全局上下文: 
+           在全局作用域中  this指向全局对象 浏览器是window 
+        函数调用
+           在函数的内部  this取决于函数调用方式
+           this指向调用调用该方法的对象
+        构造函数
+           在构造函数中 this 指向了新创建的实例对象
+        箭头函数
+           没有自己的this 它继承了最外层函数的this
+           
+       2  改变函数内部的this 指向
+         call  apply  bind 
+         call apply 可以立即调用
+         bind 则是返回一个新函数 稍后调用    
+    */
+    </script>
+  </body>
+</html>

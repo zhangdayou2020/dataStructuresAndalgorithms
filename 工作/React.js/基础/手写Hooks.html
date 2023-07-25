@@ -14,6 +14,53 @@
 
       只在React函数中调用Hooks在React函数中调用Hooks
     */
+
+      // useState 的实现
+
+      // 保存状态的数组
+      let hookStates = [];
+      let hookIndex = 0;
+      function useState(initialState) {
+        hookStates[hookIndex] = hookStates[hookIndex] || initialState;
+        // 利用闭包 维护函数调用位置
+        let currentIndex = hookIndex;
+        function setState(newState) {
+          // 要判断传入的 state 是否为函数 如果是需要把prevState传入
+          if (typeof newState === "function") {
+            // 重新赋值给newState
+            newState = newState(hookStates[hookIndex]);
+          }
+          // 更新state
+          hookStates[currentIndex] = newState;
+          // 触发视图更新
+          render();
+        }
+        // 返回数组形式 解构可以写成任意变量
+        return [hookStates[hookIndex++], setState];
+      }
+
+      // effect
+
+      function useEffect(callback, dependencies) {
+        if (hooksState[hookIndex]) {
+          // 非初始调用
+          let lastDependencies = hooksState[hookIndex];
+          // 需要判断依赖项跟上一次的是否相同
+          let same = dependencies.every((item, index) => {
+            item === lastDependencies[index];
+          });
+          if (same) {
+            hookIndex++;
+          } else {
+            hookStates[hookIndex++] = dependencies;
+            callback();
+          }
+        } else {
+          // 第一次调用
+          hookStates[hookIndex++] = dependencies;
+          callback();
+        }
+      }
     </script>
   </body>
 </html>
