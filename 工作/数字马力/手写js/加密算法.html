@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>加密</title>
+  </head>
+  <body>
+    <script>
+      function test(str) {
+        let encryptedText = "";
+        for (let i = 0; i < str.length; i++) {
+          const char = str[i];
+          // 首先需要判断是否为字母
+          if (char.match([/[a-z]/i])) {
+            let code = char.charCodeAt(0);
+            let encrytedCode = code + 4;
+          }
+          const charCode = char.charCodeAt(0);
+
+          console.log(char, "char", charCode);
+          const isUpperCase = charCode >= 65 && char <= 90;
+          const isLowerCase = charCode >= 97 && char <= 122;
+          console.log(isUpperCase, isLowerCase);
+        }
+      }
+      const result1 = test("abc");
+      const result2 = test("#@12abc");
+      console.log(result1, result2);
+    </script>
+  </body>
+</html>
