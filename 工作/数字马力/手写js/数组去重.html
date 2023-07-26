@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数组去重</title>
+  </head>
+  <body>
+    <script>
+      /*
+        数组去重
+        磕磕绊绊做出来
+      */
+
+      // 简单的数据类型
+      const simpleData = [
+        "dayou",
+        1,
+        2,
+        3,
+        2,
+        3,
+        "rubin",
+        null,
+        null,
+        undefined,
+        undefined,
+        "dayou",
+        "dayou",
+        false,
+        false,
+        true,
+        true,
+      ];
+
+      const result1 = new Set(simpleData);
+      /*
+          果然像国萍说的  Set 会将 undefined  null  boolean 这些都给去重掉的
+
+        */
+      console.log(result1, "result1", simpleData.length);
+
+      const complexData = [
+        {
+          age: "16",
+          name: "张大佑",
+        },
+        {
+          age: "16",
+          name: "张大佑",
+        },
+        {
+          age: "16",
+          name: "张大佑",
+        },
+        {
+          age: "16",
+          name: "张汝斌",
+        },
+        {
+          age: "16",
+          name: "张汝斌",
+        },
+        {
+          age: "17",
+          name: "张汝斌",
+        },
+        1,
+        1,
+        2,
+        2,
+        undefined,
+        undefined,
+      ];
+      // 需要写一个方法 对对象数组进行去重了看来
+      //通过 比对两个对象的单个值相同不
+      function compareObjectByProperties(obj1, obj2, properties) {
+        // gpt 开始就根据一个属性判断 我觉得不合适 又问了一下 改下
+        for (const property of properties) {
+          if (obj1[property] !== obj2[property]) {
+            return false;
+          }
+        }
+        return true;
+      }
+      function removeDuplicates(array, properties) {
+        const uniqueArr = [];
+        const uniqueSet = new Set();
+        for (const item of array) {
+          // 定义一个标识符 是否重复
+          let isDuplicate = false;
+          // 对引用类型的特定值进行比较
+          if (typeof item === "object") {
+            for (const uniqueItem of uniqueArr) {
+              if (compareObjectByProperties(item, uniqueItem, properties)) {
+                isDuplicate = true;
+                break;
+              }
+            }
+            if (!isDuplicate) {
+              uniqueSet.add(item);
+              uniqueArr.push(item);
+            }
+          } else {
+            uniqueSet.add(item);
+          }
+        }
+
+        return Array.from(uniqueSet);
+      }
+      const result2 = new Set(complexData);
+      const result2Arr = removeDuplicates(complexData, ["age", "name"]);
+      console.log(result2, "result2");
+      console.log(result2Arr, "result2Arr");
+    </script>
+  </body>
+</html>
