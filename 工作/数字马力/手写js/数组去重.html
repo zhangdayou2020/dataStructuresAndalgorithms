@@ -75,6 +75,10 @@
       // 需要写一个方法 对对象数组进行去重了看来
       //通过 比对两个对象的单个值相同不
       function compareObjectByProperties(obj1, obj2, properties) {
+        // 今天亚雄说了一个事情 就是先判断一下长度 不然的话 会出现子集的情况
+        if (obj1.length !== obj2.length) {
+          return false;
+        }
         // gpt 开始就根据一个属性判断 我觉得不合适 又问了一下 改下
         for (const property of properties) {
           if (obj1[property] !== obj2[property]) {
