@@ -2,6 +2,11 @@
   学习一下际民老师的页面,菜单管理(页面权限 菜单权限 以及页面资源权限)
 */
 
+/*
+
+  1. 前端登录成功以后,需要调取一个接口来获取整个云平台的菜单和页面资源
+*/
+
 // 菜单props
 interface MenuItemProps {
   breadcrumParentId?: string; // 子菜单所对应的父菜单Id
@@ -190,12 +195,30 @@ export default {
       const fakeMenu = processMenu(menu);
       const { menuList, pageLst, buttonList, tabControlList } =
         processMenu(fakeMenu);
-        yield put({
-          type 'setPageList',
-          payload:{
-            pageLst
-          }
-        })
+      yield put({
+        type: "setPageList",
+        payload: {
+          pageLst,
+        },
+      });
+      yield put({
+        type: "setMenuList",
+        payload: {
+          menuList,
+        },
+      });
+      yield put({
+        type: "setButtonList",
+        payload: {
+          buttonList,
+        },
+      });
+      yield put({
+        type: "setTabControlList",
+        payload: {
+          tabControlList,
+        },
+      });
     },
   },
   // 状态的更新
