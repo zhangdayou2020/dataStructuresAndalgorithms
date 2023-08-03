@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const orignNums = [
+        6, 1, 44, 111, 234, 6, 678, 541, 6666, 768, 235, 2222, 1245, 211, 55134,
+        224667, 124677,
+      ];
+      // const bubbleSortFunc = (arr) => {
+      //   console.log(arr, "arr");
+      //   let len = arr.length;
+      //   if (!len) {
+      //     return arr;
+      //   } else {
+      //     for (let i = 0; i < len; i++) {
+      //       for (let j = 0; j < len - i; j++) {
+      //         if (arr[j] > arr[j + 1]) {
+      //           [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+      //         }
+      //       }
+      //     }
+      //     return arr;
+      //   }
+      // };
+      // const result = bubbleSortFunc(orignNums);
+      // console.log(result, "result");
+      /*
+        这次一下子写出来了
+        始终还记得那个方法[] 交换数组两个元素的方法
+      */
+      const quickSortFunc = (arr) => {
+        const len = arr.length;
+        if (len <= 1) {
+          /*
+            
+          */
+          return arr;
+        } else {
+          console.log(arr);
+          /*
+            又一次忘了思路是什么 这算法真是记不住啊
+            就这么简单的 我都又忘了
+          */
+          let baseItem = arr[0];
+          let leftList = [];
+          let rightList = [];
+          for (let i = 1; i < len; i++) {
+            if (arr[i] > baseItem) {
+              rightList.push(arr[i]);
+            } else {
+              leftList.push(arr[i]);
+            }
+          }
+          /*
+            如何开始递归 我这会又记不住了
+          */
+          resLeft = leftList.length > 1 ? leftList : leftList;
+          resRight =
+            rightList.length > 1 ? quickSortFunc(rightList) : rightList;
+          const res = [...leftList, baseItem, ...rightList];
+
+          return res;
+        }
+      };
+      const quickRes = quickSortFunc(orignNums);
+      console.log(quickRes, "quickRes");
+    </script>
+  </body>
+</html>
